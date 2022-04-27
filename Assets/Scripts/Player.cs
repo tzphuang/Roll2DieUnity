@@ -5,13 +5,41 @@ using UnityEngine;
 //Roll2Die player script
 public class Player : MonoBehaviour
 {
+    //player stats
+    public int hitPoints;
+    public int manaPoints;
+    public int strengthStat;
+    public int intelligenceStat;
+    public int dexterityStat;
+    public int vitalityStat;
+    public int wisdomStat;
+    public int luckStat;
+
     //tiles [1][2][3] represent  
     private int playerPosition;
+
+    //used to keep track if player is crouched to limit movement
     private bool playerCrouched;
+
+    //coroutines
+    IEnumerator hpRegenRoutine;
+    IEnumerator mpRegenRoutine;
 
     //array needed to dynamically store all attack boxes created by player
     //so the attack boxes can be instantiated/referenced/destroyed 
     private GameObject[] attackBoxes;
+
+    //will use this later when doing getting and setters
+    /* 
+    public int Score
+    {
+        get { return currScore; }
+        set
+        {
+            currScore = value;
+            textScore.text = "Score: " + currScore;
+        }
+    }*/
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +47,23 @@ public class Player : MonoBehaviour
         playerPosition = 2; //spawn on middle tile
         moveToTile2(); //force set object to middle tile
         playerCrouched = false;
+
+        //setting default stats
+        hitPoints = 100;
+        manaPoints = 100;
+        strengthStat = 10;
+        intelligenceStat = 10;
+        dexterityStat = 10;
+        vitalityStat = 10;
+        wisdomStat = 10;
+        luckStat = 10;
+
+        //setting coroutines
+        hpRegenRoutine = hpRegen();
+        mpRegenRoutine = mpRegen();
+
+        //starting coroutines
+        //startPlayerCoroutines();
     }
 
     // Update is called once per frame
@@ -40,6 +85,43 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         
+    }
+
+    //Coroutines
+    IEnumerator hpRegen()//makes sure the player regens hp based on vitality stat
+    {
+        float seconds;
+
+        while (true)
+        {
+            hitPoints++;
+            seconds = ((100 - vitalityStat) / 2);
+            yield return new WaitForSeconds(seconds);
+        }
+    }
+
+    IEnumerator mpRegen()//makes sure the player regens mp based on wisdom stat
+    {
+        float seconds;
+
+        while (true)
+        {
+            manaPoints++;
+            seconds = ((100 - wisdomStat) / 2);
+            yield return new WaitForSeconds(seconds);
+        }
+    }
+
+    public void startPlayerCoroutines()
+    {
+        StartCoroutine(hpRegenRoutine);
+        StartCoroutine(mpRegenRoutine);
+    }
+
+    public void stopPlayerCoroutines()
+    {
+        StopCoroutine(hpRegenRoutine);
+        StopCoroutine(mpRegenRoutine);
     }
 
     //generalized method for setting object's position
@@ -98,4 +180,6 @@ public class Player : MonoBehaviour
     {
         moveObjPosition((float) 3.75, (float) 0.25, (float) 0.0);
     }
+
+
 }
