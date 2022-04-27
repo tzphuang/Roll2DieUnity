@@ -20,6 +20,6 @@ public class Killbox : MonoBehaviour
     {
         //anything that exits the killbox will be destroyed
         //this should only affect projectiles
-        Destroy(other);
+        Destroy(other.gameObject);
     }
 }
