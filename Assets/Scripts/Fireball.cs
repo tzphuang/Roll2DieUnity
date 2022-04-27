@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Fireball : MonoBehaviour
 {
-    private float speed = 7;
+    private float speed = 12;
 
     private new Rigidbody rigidbody;
     private Vector3 velocity;
@@ -15,7 +15,7 @@ public class Fireball : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
 
         //delay the movement of the fireball for cast time
-        Invoke("cast", .25f);
+        Invoke("cast", .1f);
     }
 
     void cast()
