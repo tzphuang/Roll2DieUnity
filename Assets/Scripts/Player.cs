@@ -29,17 +29,8 @@ public class Player : MonoBehaviour
     //so the attack boxes can be instantiated/referenced/destroyed 
     private GameObject[] attackBoxes;
 
-    //will use this later when doing getting and setters
-    /* 
-    public int Score
-    {
-        get { return currScore; }
-        set
-        {
-            currScore = value;
-            textScore.text = "Score: " + currScore;
-        }
-    }*/
+    public Fireball fireballPrefab;
+    //private GameObject[] firedProjectiles;
 
     // Start is called before the first frame update
     void Start()
@@ -79,6 +70,11 @@ public class Player : MonoBehaviour
         {
             moveRightOneTile();
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            spawnProjectile();
+        }
     }
 
     //update on every game engine tick
@@ -87,7 +83,7 @@ public class Player : MonoBehaviour
         
     }
 
-    //Coroutines
+    //Coroutines functions start
     IEnumerator hpRegen()//makes sure the player regens hp based on vitality stat
     {
         float seconds;
@@ -123,7 +119,10 @@ public class Player : MonoBehaviour
         StopCoroutine(hpRegenRoutine);
         StopCoroutine(mpRegenRoutine);
     }
+    //Coroutines functions end
 
+
+    //Movement functions start
     //generalized method for setting object's position
     private void moveObjPosition(float x, float y, float z)
     {
@@ -180,6 +179,15 @@ public class Player : MonoBehaviour
     {
         moveObjPosition((float) 3.75, (float) 0.25, (float) 0.0);
     }
+    //movement functions end
 
+    //projectile functions start
+    private void spawnProjectile()
+    {
+        float castDistance = 2;
+        float castHeight = .5f;
+        Fireball newFireball = Instantiate(fireballPrefab);
+        newFireball.moveObjPosition(transform.position.x, transform.position.y + castHeight, transform.position.z + castDistance);
+    }
 
 }

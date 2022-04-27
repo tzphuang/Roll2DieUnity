@@ -15,4 +15,11 @@ public class Killbox : MonoBehaviour
     {
         
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        //anything that exits the killbox will be destroyed
+        //this should only affect projectiles
+        Destroy(other);
+    }
 }

@@ -110,6 +110,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 814dc659fef4740b4a2a69cf4aabe585, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitPoints: 0
+  manaPoints: 0
+  strengthStat: 0
+  intelligenceStat: 0
+  dexterityStat: 0
+  vitalityStat: 0
+  wisdomStat: 0
+  luckStat: 0
+  fireballPrefab: {fileID: 6579493591446012684, guid: 8079797029adf4973a396e9b47af4823, type: 3}
 --- !u!1 &8574093687677329031
 GameObject:
   m_ObjectHideFlags: 0
