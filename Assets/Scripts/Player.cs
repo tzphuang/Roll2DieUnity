@@ -5,6 +5,8 @@ using UnityEngine;
 //Roll2Die player script
 public class Player : MonoBehaviour
 {
+    private new Rigidbody rigidbody;
+
     //player stats
     public int hitPoints;
     public int manaPoints;
@@ -14,6 +16,8 @@ public class Player : MonoBehaviour
     public int vitalityStat;
     public int wisdomStat;
     public int luckStat;
+    public int hpPotion;
+    public int mpPotion;
 
     //tiles [1][2][3] represent  
     private int playerPosition;
@@ -32,12 +36,16 @@ public class Player : MonoBehaviour
     public Fireball fireballPrefab;
     //private GameObject[] firedProjectiles;
 
-    // Start is called before the first frame update
+
+
+    //Start is called before the first frame update
     void Start()
     {
         playerPosition = 2; //spawn on middle tile
         moveToTile2(); //force set object to middle tile
         playerCrouched = false;
+
+        rigidbody = GetComponent<Rigidbody>();
 
         //setting default stats
         hitPoints = 100;
@@ -48,6 +56,8 @@ public class Player : MonoBehaviour
         vitalityStat = 10;
         wisdomStat = 10;
         luckStat = 10;
+        hpPotion = 3;
+        mpPotion = 3;
 
         //setting coroutines
         hpRegenRoutine = hpRegen();
