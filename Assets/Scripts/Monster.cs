@@ -14,9 +14,11 @@ public class Monster : MonoBehaviour
         hitPoints = 400;
         attacking = false;
 
+        //calling tester routine
         StartCoroutine("spawnProjectileTesterCoroutine");
     }
 
+    //tester coroutine for testing out all projectile spawn locations
     IEnumerator spawnProjectileTesterCoroutine()
     {
         float seconds = 2f;

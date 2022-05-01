@@ -36,6 +36,7 @@ public class MonsterProjectile : MonoBehaviour
     //in second 3, position is 15
     public void Launch(string velocity)
     {
+        //Debug.Log("inside launch switch statement.");
         switch (velocity)
         {   
             case "x":

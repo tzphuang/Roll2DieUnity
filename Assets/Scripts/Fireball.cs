@@ -14,7 +14,7 @@ public class Fireball : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
 
         //delay the movement of the fireball for cast time
-        Invoke("cast", .1f);
+        Invoke("cast", .15f);
     }
 
     void cast()
