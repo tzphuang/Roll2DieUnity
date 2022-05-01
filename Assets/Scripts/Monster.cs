@@ -13,24 +13,43 @@ public class Monster : MonoBehaviour
     {
         hitPoints = 400;
         attacking = false;
+
+        StartCoroutine("spawnProjectileTesterCoroutine");
+    }
+
+    IEnumerator spawnProjectileTesterCoroutine()
+    {
+        float seconds = 2f;
+
+        //for loop to test creating projectiles
+        for (int count = 7; count < 19; count++)
+        {
+            createProjectile(7, 15);
+            if (count == 18)
+            {
+                count = 6;
+            }
+            yield return new WaitForSeconds(seconds);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void FixedUpdate()
     {
-        
+      
     }
 
-    public void createProjectile(int spawnLocation)
+    public void createProjectile(int spawnLocation, int damage)
     {
         float x = 0, y = 0, z = 0;
         bool createProjectile = true;
         MonsterProjectile newProjectile = Instantiate(monsterProjectilePrefab);
+        newProjectile.setProjectileDamage(damage);
 
         switch (spawnLocation)
         {
@@ -38,52 +57,63 @@ public class Monster : MonoBehaviour
             case 7:
                 x = -4.25f; y = .5f; z = 36f;
                 newProjectile.rotateObj(-90, 0, 0);
+                newProjectile.Launch("-z");
                 break;
             case 8:
                 x = -.25f; y = .5f; z = 36f;
                 newProjectile.rotateObj(-90, 0, 0);
+                newProjectile.Launch("-z");
                 break;
             case 9:
                 x = 3.75f; y = .5f; z = 36f;
                 newProjectile.rotateObj(-90, 0, 0);
+                newProjectile.Launch("-z");
                 break;
 
             // spawns 11/12 are the left/right spawns respectively
             case 11:
                 x = -12.25f; y = .5f; z = 0f;
                 newProjectile.rotateObj(0, 0, -90);
+                newProjectile.Launch("x");
                 break;
             case 12:
                 x = 11.75f; y = .5f; z = 0f;
                 newProjectile.rotateObj(0, 0, 90);
+                newProjectile.Launch("-x");
                 break;
 
             //spawns 13/14/15 are the falling projectiles spawns (spawns above the player)
             case 13:
                 x = -4.25f; y = 16.25f; z = 0f;
                 newProjectile.rotateObj(180, 0, 0);
+                newProjectile.Launch("-y");
                 break;
             case 14:
                 x = -.25f; y = 16.25f; z = 0f;
                 newProjectile.rotateObj(180, 0, 0);
+                newProjectile.Launch("-y");
                 break;
             case 15:
                 x = 3.75f; y = 16.25f; z = 0f;
                 newProjectile.rotateObj(180, 0, 0);
+                newProjectile.Launch("-y");
                 break;
 
             //spawns 16/17/18 are the rising projectiles spawns (spawns below the player)
             case 16:
                 x = -4.25f; y = -15.75f; z = 0f;
                 newProjectile.rotateObj(0, 0, 0);
+                newProjectile.Launch("y");
                 break;
             case 17:
                 x = -.25f; y = -15.75f; z = 0f;
                 newProjectile.rotateObj(0, 0, 0);
+                newProjectile.Launch("y");
                 break;
             case 18:
                 x = 3.75f; y = -15.75f; z = 0f;
                 newProjectile.rotateObj(0, 0, 0);
+                newProjectile.Launch("y");
                 break;
 
             default:

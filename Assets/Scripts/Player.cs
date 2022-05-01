@@ -5,8 +5,6 @@ using UnityEngine;
 //Roll2Die player script
 public class Player : MonoBehaviour
 {
-    private new Rigidbody rigidbody;
-
     //player stats
     public int hitPoints;
     public int manaPoints;
@@ -18,6 +16,11 @@ public class Player : MonoBehaviour
     public int luckStat;
     public int hpPotion;
     public int mpPotion;
+    public bool invulnerable;
+    public Fireball fireballPrefab;
+
+    public readonly float maxHp = 100;
+    public readonly float maxMp = 100;
 
     //tiles [1][2][3] represent  
     private int playerPosition;
@@ -26,16 +29,14 @@ public class Player : MonoBehaviour
     private bool playerCrouched;
 
     //coroutines
-    IEnumerator hpRegenRoutine;
-    IEnumerator mpRegenRoutine;
+    private IEnumerator hpRegenRoutine;
+    private IEnumerator mpRegenRoutine;
 
     //array needed to dynamically store all attack boxes created by player
     //so the attack boxes can be instantiated/referenced/destroyed 
     private GameObject[] attackBoxes;
 
-    public Fireball fireballPrefab;
-    //private GameObject[] firedProjectiles;
-
+    private new Rigidbody rigidbody;
 
 
     //Start is called before the first frame update
@@ -58,6 +59,7 @@ public class Player : MonoBehaviour
         luckStat = 10;
         hpPotion = 3;
         mpPotion = 3;
+        invulnerable = false;
 
         //setting coroutines
         hpRegenRoutine = hpRegen();
@@ -100,9 +102,12 @@ public class Player : MonoBehaviour
 
         while (true)
         {
-            hitPoints++;
-            seconds = ((100 - vitalityStat) / 2);
-            yield return new WaitForSeconds(seconds);
+            if (maxHp >= hitPoints)
+            {
+                hitPoints++;
+                seconds = ((100 - vitalityStat) / 2);
+                yield return new WaitForSeconds(seconds);
+            }
         }
     }
 
@@ -112,9 +117,12 @@ public class Player : MonoBehaviour
 
         while (true)
         {
-            manaPoints++;
-            seconds = ((100 - wisdomStat) / 2);
-            yield return new WaitForSeconds(seconds);
+            if (maxMp >= manaPoints)
+            {
+                manaPoints++;
+                seconds = ((100 - wisdomStat) / 2);
+                yield return new WaitForSeconds(seconds);
+            }
         }
     }
 
@@ -128,6 +136,16 @@ public class Player : MonoBehaviour
     {
         StopCoroutine(hpRegenRoutine);
         StopCoroutine(mpRegenRoutine);
+    }
+
+    //this is here so I can let the player have varying degrees of invulnerability
+    //depending on the situation like getting attacked or activating an ability
+    //that grants invulerability
+    IEnumerator playerInvulTimer(float seconds)
+    {
+        invulnerable = true;
+        yield return new WaitForSeconds(seconds);
+        invulnerable = false;
     }
     //Coroutines functions end
 

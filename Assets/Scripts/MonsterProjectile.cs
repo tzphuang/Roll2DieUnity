@@ -4,23 +4,69 @@ using UnityEngine;
 
 public class MonsterProjectile : MonoBehaviour
 {
-    private float speed;
     public readonly float DEFAULTSPEED = 12;
-
+    private float speed;
     private new Rigidbody rigidbody;
     private Vector3 velocity;
-
     private int projectileDamage;
 
     // Start is called before the first frame update
     void Start()
     {
+        rigidbody = GetComponent<Rigidbody>();
         speed = DEFAULTSPEED;
     }
 
-    void cast()
+    public void setProjectileDamage(int newDamage)
     {
-        rigidbody.velocity = Vector3.forward * speed;
+        projectileDamage = newDamage;
+    }
+
+    public int getProjectileDamage()
+    {
+        return projectileDamage;
+    }
+
+    //example how this function works
+    //velocity = "x"
+    //that means the monster projectile will now fly from its spawn
+    //with an increasing x, so
+    //in second 1, position is 5
+    //in second 2, position is 10
+    //in second 3, position is 15
+    public void Launch(string velocity)
+    {
+        switch (velocity)
+        {   
+            case "x":
+                this.rigidbody.velocity = Vector3.right * speed;
+                break;
+
+            case "-x":
+                this.rigidbody.velocity = Vector3.left * speed;
+                break;
+
+            case "y":
+                this.rigidbody.velocity = Vector3.up * speed;
+                break;
+
+            case "-y":
+                this.rigidbody.velocity = Vector3.down * speed;
+                break;
+
+            case "z":
+                this.rigidbody.velocity = Vector3.forward * speed;
+                break;
+
+            case "-z":
+                this.rigidbody.velocity = Vector3.back * speed;
+                break;
+
+            default:
+                Debug.Log("MonsterProjectile:launch():switch statement: Invalid velocity");
+                break;
+        }
+
     }
 
     public void moveObjPosition(float x, float y, float z)
@@ -41,17 +87,7 @@ public class MonsterProjectile : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //rigidbody.velocity = rigidbody.velocity.normalized * speed;
-        //velocity = rigidbody.velocity;
-    }
-
-    public void setProjectileDamage(int newDamage)
-    {
-        projectileDamage = newDamage;
-    }
-
-    public int getProjectileDamage()
-    {
-        return projectileDamage;
+        rigidbody.velocity = rigidbody.velocity.normalized * speed;
+        velocity = rigidbody.velocity;
     }
 }
