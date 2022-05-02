@@ -15,7 +15,7 @@ public class Monster : MonoBehaviour
         attacking = false;
 
 
-        IEnumerator attackPattern1 = spawnProjectileChain(.75f);
+        IEnumerator attackPattern1 = spawnProjectileChain(1f);
         StartCoroutine(attackPattern1);
     }
 
