@@ -127,4 +127,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitPoints: 0
   attacking: 0
-  monsterProjectilePrefab: {fileID: 4437345424723595066, guid: 13c0773e1f20b481ba28c2cd27644574, type: 3}
+  monsterProjectilePrefab: {fileID: 4871165695034838550, guid: 13c0773e1f20b481ba28c2cd27644574, type: 3}

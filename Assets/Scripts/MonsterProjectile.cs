@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MonsterProjectile : MonoBehaviour
 {
-    public readonly float DEFAULTSPEED = 12;
+    public readonly float DEFAULTSPEED = 12f;
     private float speed;
     private new Rigidbody rigidbody;
     private Vector3 velocity;
@@ -12,6 +12,17 @@ public class MonsterProjectile : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
+    {
+
+    }
+
+    //so this is here because when using the start()
+    //I call the launch() but it is trying to reference the rigidbody
+    //before the start() is called
+    //so instead i just set the defaults myself before any start() occurs
+    //to pre-emptively avoid calling a rigid body that was not set yet
+    //essentially i put the cart before the horse here
+    public void setDefaults()
     {
         rigidbody = GetComponent<Rigidbody>();
         speed = DEFAULTSPEED;
@@ -34,12 +45,12 @@ public class MonsterProjectile : MonoBehaviour
     //in second 1, position is 5
     //in second 2, position is 10
     //in second 3, position is 15
-    public void Launch(string velocity)
+    public void Launch(string orientation)
     {
         //Debug.Log("inside launch switch statement.");
-        switch (velocity)
+        switch (orientation)
         {   
-            case "x":
+            case "+x":
                 this.rigidbody.velocity = Vector3.right * speed;
                 break;
 
@@ -47,7 +58,7 @@ public class MonsterProjectile : MonoBehaviour
                 this.rigidbody.velocity = Vector3.left * speed;
                 break;
 
-            case "y":
+            case "+y":
                 this.rigidbody.velocity = Vector3.up * speed;
                 break;
 
@@ -55,7 +66,7 @@ public class MonsterProjectile : MonoBehaviour
                 this.rigidbody.velocity = Vector3.down * speed;
                 break;
 
-            case "z":
+            case "+z":
                 this.rigidbody.velocity = Vector3.forward * speed;
                 break;
 
@@ -64,7 +75,7 @@ public class MonsterProjectile : MonoBehaviour
                 break;
 
             default:
-                Debug.Log("MonsterProjectile:launch():switch statement: Invalid velocity");
+                Debug.Log("MonsterProjectile:launch():switch statement: Invalid orientation");
                 break;
         }
 
@@ -77,7 +88,8 @@ public class MonsterProjectile : MonoBehaviour
 
     public void rotateObj(float x, float y, float z)
     {
-        this.transform.Rotate(x, y, z, Space.Self);
+        //this.transform.Rotate(x, y, z, Space.Self);
+        this.transform.Rotate(x, y, z);
     }
 
     // Update is called once per frame

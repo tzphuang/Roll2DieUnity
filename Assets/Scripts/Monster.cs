@@ -14,25 +14,9 @@ public class Monster : MonoBehaviour
         hitPoints = 400;
         attacking = false;
 
-        //calling tester routine
-        StartCoroutine("spawnProjectileTesterCoroutine");
-    }
 
-    //tester coroutine for testing out all projectile spawn locations
-    IEnumerator spawnProjectileTesterCoroutine()
-    {
-        float seconds = 2f;
-
-        //for loop to test creating projectiles
-        for (int count = 7; count < 19; count++)
-        {
-            createProjectile(7, 15);
-            if (count == 18)
-            {
-                count = 6;
-            }
-            yield return new WaitForSeconds(seconds);
-        }
+        IEnumerator attackPattern1 = spawnProjectileChain(.75f);
+        StartCoroutine(attackPattern1);
     }
 
     // Update is called once per frame
@@ -46,90 +30,120 @@ public class Monster : MonoBehaviour
       
     }
 
+    //tester coroutine to make sure spawning works
+    IEnumerator spawnProjectileChain(float seconds)
+    {
+        createProjectile(7, 15);
+        yield return new WaitForSeconds(seconds);
+        createProjectile(8, 15);
+        yield return new WaitForSeconds(seconds);
+        createProjectile(9, 15);
+        yield return new WaitForSeconds(seconds);
+
+        createProjectile(11, 15);
+        yield return new WaitForSeconds(seconds);
+        createProjectile(12, 15);
+        yield return new WaitForSeconds(seconds);
+
+        createProjectile(13, 15);
+        yield return new WaitForSeconds(seconds);
+        createProjectile(14, 15);
+        yield return new WaitForSeconds(seconds);
+        createProjectile(15, 15);
+        yield return new WaitForSeconds(seconds);
+
+        createProjectile(16, 15);
+        yield return new WaitForSeconds(seconds);
+        createProjectile(17, 15);
+        yield return new WaitForSeconds(seconds);
+        createProjectile(18, 15);
+        yield return new WaitForSeconds(seconds);
+    }
+
     public void createProjectile(int spawnLocation, int damage)
     {
-        float x = 0, y = 0, z = 0;
-        bool createProjectile = true;
+        string orientation;
         MonsterProjectile newProjectile = Instantiate(monsterProjectilePrefab);
         newProjectile.setProjectileDamage(damage);
+        newProjectile.setDefaults();
 
         switch (spawnLocation)
         {
             // spawns 7/8/9 are the frontal projectiles
             case 7:
-                x = -4.25f; y = .5f; z = 36f;
+                newProjectile.moveObjPosition(-4.25f, .5f, 36f);
                 newProjectile.rotateObj(-90, 0, 0);
-                newProjectile.Launch("-z");
+                orientation = "-z";
+                newProjectile.Launch(orientation);
                 break;
             case 8:
-                x = -.25f; y = .5f; z = 36f;
+                newProjectile.moveObjPosition(-.25f, .5f, 36f);
                 newProjectile.rotateObj(-90, 0, 0);
-                newProjectile.Launch("-z");
+                orientation = "-z";
+                newProjectile.Launch(orientation);
                 break;
             case 9:
-                x = 3.75f; y = .5f; z = 36f;
+                newProjectile.moveObjPosition(3.75f, .5f, 36f);
                 newProjectile.rotateObj(-90, 0, 0);
-                newProjectile.Launch("-z");
+                orientation = "-z";
+                newProjectile.Launch(orientation);
                 break;
 
             // spawns 11/12 are the left/right spawns respectively
             case 11:
-                x = -12.25f; y = .5f; z = 0f;
+                newProjectile.moveObjPosition(-12.25f, .5f, 0f);
                 newProjectile.rotateObj(0, 0, -90);
-                newProjectile.Launch("x");
+                orientation = "+x";
+                newProjectile.Launch(orientation);
                 break;
             case 12:
-                x = 11.75f; y = .5f; z = 0f;
+                newProjectile.moveObjPosition(11.75f, .5f, 0f);
                 newProjectile.rotateObj(0, 0, 90);
-                newProjectile.Launch("-x");
+                orientation = "-x";
+                newProjectile.Launch(orientation);
                 break;
 
             //spawns 13/14/15 are the falling projectiles spawns (spawns above the player)
             case 13:
-                x = -4.25f; y = 16.25f; z = 0f;
+                newProjectile.moveObjPosition(-4.25f, 16.25f, 0f);
                 newProjectile.rotateObj(180, 0, 0);
-                newProjectile.Launch("-y");
+                orientation = "-y";
+                newProjectile.Launch(orientation);
                 break;
             case 14:
-                x = -.25f; y = 16.25f; z = 0f;
+                newProjectile.moveObjPosition(-.25f, 16.25f, 0f);
                 newProjectile.rotateObj(180, 0, 0);
-                newProjectile.Launch("-y");
+                orientation = "-y";
+                newProjectile.Launch(orientation);
                 break;
             case 15:
-                x = 3.75f; y = 16.25f; z = 0f;
+                newProjectile.moveObjPosition(3.75f, 16.25f, 0f);
                 newProjectile.rotateObj(180, 0, 0);
-                newProjectile.Launch("-y");
+                orientation = "-y";
+                newProjectile.Launch(orientation);
                 break;
 
             //spawns 16/17/18 are the rising projectiles spawns (spawns below the player)
             case 16:
-                x = -4.25f; y = -15.75f; z = 0f;
-                newProjectile.rotateObj(0, 0, 0);
-                newProjectile.Launch("y");
+                newProjectile.moveObjPosition(-4.25f, -15.75f, 0f);
+                orientation = "+y";
+                newProjectile.Launch(orientation);
                 break;
             case 17:
-                x = -.25f; y = -15.75f; z = 0f;
-                newProjectile.rotateObj(0, 0, 0);
-                newProjectile.Launch("y");
+                newProjectile.moveObjPosition(-.25f, -15.75f, 0f);
+                orientation = "+y";
+                newProjectile.Launch(orientation);
                 break;
             case 18:
-                x = 3.75f; y = -15.75f; z = 0f;
-                newProjectile.rotateObj(0, 0, 0);
-                newProjectile.Launch("y");
+                newProjectile.moveObjPosition(3.75f, -15.75f, 0f);
+                orientation = "+y";
+                newProjectile.Launch(orientation);
                 break;
 
             default:
-                createProjectile = false;
-                Destroy(newProjectile);
                 Debug.Log("Monsterscript createProjectile Switch Statement: Spawn Location Invalid. ");
+                Destroy(newProjectile);
                 break;
-        }
-
-        if (createProjectile)
-        {
-            newProjectile.moveObjPosition(x, y, z);
-            //need a way to set projectiles "velocity direction"
-            //probably will put this in the switch statements
         }
     }
 

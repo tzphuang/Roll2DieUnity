@@ -20,6 +20,11 @@ public class Fireball : MonoBehaviour
     void cast()
     {
         rigidbody.velocity = Vector3.forward * speed;
+        //rigidbody.velocity = Vector3.back * speed;
+        //rigidbody.velocity = Vector3.left * speed;
+        //rigidbody.velocity = Vector3.right * speed;
+        //rigidbody.velocity = Vector3.up * speed;
+        //rigidbody.velocity = Vector3.down * speed;
     }
 
     public void moveObjPosition(float x, float y, float z)

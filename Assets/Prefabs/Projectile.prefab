@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 3342844476917261703}
   - component: {fileID: 4578990392457260992}
   - component: {fileID: 6045741165217736168}
-  - component: {fileID: 4437345424723595066}
   - component: {fileID: -7990639953594751375}
+  - component: {fileID: 4871165695034838550}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Untagged
@@ -93,24 +93,12 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3086771329569694840}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5000001
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &4437345424723595066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3086771329569694840}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c257183beedd043b5b4e5773dd4240aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &-7990639953594751375
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -127,6 +115,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4871165695034838550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3086771329569694840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c257183beedd043b5b4e5773dd4240aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4545776096430721129
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,7 +138,6 @@ GameObject:
   - component: {fileID: 7587375627085608162}
   - component: {fileID: 8384190674402445917}
   - component: {fileID: 843682325072247530}
-  - component: {fileID: 7514509329277660509}
   m_Layer: 0
   m_Name: Tip
   m_TagString: Untagged
@@ -209,16 +208,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &7514509329277660509
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4545776096430721129}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
