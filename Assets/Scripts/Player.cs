@@ -21,6 +21,10 @@ public class Player : MonoBehaviour
 
     public readonly float maxHp = 100;
     public readonly float maxMp = 100;
+    public readonly float regenSpeed = 1500;
+
+    public HealthBar hpBar;
+    public HealthBar mpBar;
 
     //tiles [1][2][3] represent  
     private int playerPosition;
@@ -61,12 +65,16 @@ public class Player : MonoBehaviour
         mpPotion = 3;
         invulnerable = false;
 
+        //setting slider's defaults
+        hpBar.setSliderMaxValue((int) maxHp);
+        mpBar.setSliderMaxValue((int) maxMp);
+
         //setting coroutines
         hpRegenRoutine = hpRegen();
         mpRegenRoutine = mpRegen();
 
         //starting coroutines
-        //startPlayerCoroutines();
+        startPlayerCoroutines();
     }
 
     // Update is called once per frame
@@ -105,9 +113,11 @@ public class Player : MonoBehaviour
             if (maxHp >= hitPoints)
             {
                 hitPoints++;
-                seconds = ((100 - vitalityStat) / 2);
-                yield return new WaitForSeconds(seconds);
+                hpBar.setSliderValue(hitPoints);
             }
+            //the yield statement must be outside the if statement to avoid an infinite loop
+            seconds = ((100 - vitalityStat) / regenSpeed);
+            yield return new WaitForSeconds(seconds);
         }
     }
 
@@ -120,9 +130,11 @@ public class Player : MonoBehaviour
             if (maxMp >= manaPoints)
             {
                 manaPoints++;
-                seconds = ((100 - wisdomStat) / 2);
-                yield return new WaitForSeconds(seconds);
+                mpBar.setSliderValue(manaPoints);
             }
+            //the yield statement must be outside the if statement to avoid an infinite loop
+            seconds = ((100 - wisdomStat) / regenSpeed);
+            yield return new WaitForSeconds(seconds);
         }
     }
 
@@ -212,10 +224,18 @@ public class Player : MonoBehaviour
     //projectile functions start
     private void spawnProjectile()
     {
-        float castDistance = 2;
-        float castHeight = .5f;
-        Fireball newFireball = Instantiate(fireballPrefab);
-        newFireball.moveObjPosition(transform.position.x, transform.position.y + castHeight, transform.position.z + castDistance);
+        if(manaPoints >= 25)
+        {
+            manaPoints -= 25;
+            mpBar.setSliderValue(manaPoints);
+
+
+            float castDistance = 2;
+            float castHeight = .5f;
+            Fireball newFireball = Instantiate(fireballPrefab);
+            newFireball.moveObjPosition(transform.position.x, transform.position.y + castHeight, transform.position.z + castDistance);
+        }
+
     }
 
 }
