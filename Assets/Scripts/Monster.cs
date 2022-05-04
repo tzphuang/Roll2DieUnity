@@ -4,19 +4,31 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
+    public readonly int maxHp = 400;
     public int hitPoints;
+    public int monsterDamage;
     public bool attacking;
     public MonsterProjectile monsterProjectilePrefab;
+    public HealthBar hpBar;
 
     // Start is called before the first frame update
     void Start()
     {
         hitPoints = 400;
         attacking = false;
+        monsterDamage = 15;
 
+        hpBar.setSliderMaxValue(maxHp);
+        hpBar.setSliderValue(hitPoints);
 
         IEnumerator attackPattern1 = spawnProjectileChain(1f);
         StartCoroutine(attackPattern1);
+    }
+
+    public void takeDamage(int damage)
+    {
+        hitPoints -= damage;
+        hpBar.setSliderValue(hitPoints);
     }
 
     // Update is called once per frame
@@ -33,30 +45,30 @@ public class Monster : MonoBehaviour
     //tester coroutine to make sure spawning works
     IEnumerator spawnProjectileChain(float seconds)
     {
-        createProjectile(7, 15);
+        createProjectile(7, monsterDamage);
         yield return new WaitForSeconds(seconds);
-        createProjectile(8, 15);
+        createProjectile(8, monsterDamage);
         yield return new WaitForSeconds(seconds);
-        createProjectile(9, 15);
-        yield return new WaitForSeconds(seconds);
-
-        createProjectile(11, 15);
-        yield return new WaitForSeconds(seconds);
-        createProjectile(12, 15);
+        createProjectile(9, monsterDamage);
         yield return new WaitForSeconds(seconds);
 
-        createProjectile(13, 15);
+        createProjectile(11, monsterDamage);
         yield return new WaitForSeconds(seconds);
-        createProjectile(14, 15);
-        yield return new WaitForSeconds(seconds);
-        createProjectile(15, 15);
+        createProjectile(12, monsterDamage);
         yield return new WaitForSeconds(seconds);
 
-        createProjectile(16, 15);
+        createProjectile(13, monsterDamage);
         yield return new WaitForSeconds(seconds);
-        createProjectile(17, 15);
+        createProjectile(14, monsterDamage);
         yield return new WaitForSeconds(seconds);
-        createProjectile(18, 15);
+        createProjectile(15, monsterDamage);
+        yield return new WaitForSeconds(seconds);
+
+        createProjectile(16, monsterDamage);
+        yield return new WaitForSeconds(seconds);
+        createProjectile(17, monsterDamage);
+        yield return new WaitForSeconds(seconds);
+        createProjectile(18, monsterDamage);
         yield return new WaitForSeconds(seconds);
     }
 

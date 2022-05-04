@@ -5,6 +5,10 @@ using UnityEngine;
 //Roll2Die player script
 public class Player : MonoBehaviour
 {
+    public readonly float maxHp = 100;
+    public readonly float maxMp = 100;
+    public readonly float regenSpeed = 10;
+
     //player stats
     public int hitPoints;
     public int manaPoints;
@@ -18,10 +22,6 @@ public class Player : MonoBehaviour
     public int mpPotion;
     public bool invulnerable;
     public Fireball fireballPrefab;
-
-    public readonly float maxHp = 100;
-    public readonly float maxMp = 100;
-    public readonly float regenSpeed = 1500;
 
     public HealthBar hpBar;
     public HealthBar mpBar;
@@ -56,10 +56,10 @@ public class Player : MonoBehaviour
         hitPoints = 100;
         manaPoints = 100;
         strengthStat = 10;
-        intelligenceStat = 10;
-        dexterityStat = 10;
-        vitalityStat = 10;
-        wisdomStat = 10;
+        intelligenceStat = 10; 
+        dexterityStat = 10; 
+        vitalityStat = 10; //this should never go over 100 or regen code breaks
+        wisdomStat = 99; //this should never go over 100 or regen code breaks
         luckStat = 10;
         hpPotion = 3;
         mpPotion = 3;
@@ -67,7 +67,9 @@ public class Player : MonoBehaviour
 
         //setting slider's defaults
         hpBar.setSliderMaxValue((int) maxHp);
+        hpBar.setSliderValue(hitPoints);
         mpBar.setSliderMaxValue((int) maxMp);
+        mpBar.setSliderValue(manaPoints);
 
         //setting coroutines
         hpRegenRoutine = hpRegen();
@@ -75,6 +77,12 @@ public class Player : MonoBehaviour
 
         //starting coroutines
         startPlayerCoroutines();
+    }
+
+    public void takeDamage(int damage)
+    {
+        hitPoints -= damage;
+        hpBar.setSliderValue(hitPoints);
     }
 
     // Update is called once per frame
@@ -230,9 +238,13 @@ public class Player : MonoBehaviour
             mpBar.setSliderValue(manaPoints);
 
 
+            //setting spawn distance away from player
             float castDistance = 2;
             float castHeight = .5f;
+            //creating new instance of fireball prefab
             Fireball newFireball = Instantiate(fireballPrefab);
+            //setting damage on fireball depending on the player's int stat
+            newFireball.setDamage((2 * intelligenceStat) + 25);
             newFireball.moveObjPosition(transform.position.x, transform.position.y + castHeight, transform.position.z + castDistance);
         }
 

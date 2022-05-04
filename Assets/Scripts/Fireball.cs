@@ -7,6 +7,7 @@ public class Fireball : MonoBehaviour
     private float speed = 12;
     private new Rigidbody rigidbody;
     private Vector3 velocity;
+    private int damage;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +28,11 @@ public class Fireball : MonoBehaviour
         this.transform.position = new Vector3(x, y, z);
     }
 
+    public void setDamage(int newDamage)
+    {
+        damage = newDamage;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -37,5 +43,20 @@ public class Fireball : MonoBehaviour
     {
         rigidbody.velocity = rigidbody.velocity.normalized * speed;
         velocity = rigidbody.velocity;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Projectile")
+        {
+            Destroy(other.gameObject);
+        }
+
+        if(other.gameObject.tag == "Monster")
+        {
+            Monster currMonster = (Monster) other.GetComponent<Monster>();
+            currMonster.takeDamage(damage);
+            Destroy(this.gameObject);
+        }
     }
 }

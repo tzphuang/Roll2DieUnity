@@ -103,4 +103,13 @@ public class MonsterProjectile : MonoBehaviour
         rigidbody.velocity = rigidbody.velocity.normalized * speed;
         velocity = rigidbody.velocity;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Player")
+        {
+            Player currPlayer = (Player)other.GetComponent<Player>();
+            currPlayer.takeDamage(projectileDamage);
+        }
+    }
 }
