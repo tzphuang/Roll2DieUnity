@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Monster : MonoBehaviour
 {
@@ -10,13 +11,16 @@ public class Monster : MonoBehaviour
     public bool attacking;
     public MonsterProjectile monsterProjectilePrefab;
     public HealthBar hpBar;
+    public Text hpBarText;
 
     // Start is called before the first frame update
     void Start()
     {
         hitPoints = 400;
+        hpBarText.text = hitPoints + "/" + maxHp;
         attacking = false;
         monsterDamage = 15;
+        
 
         hpBar.setSliderMaxValue(maxHp);
         hpBar.setSliderValue(hitPoints);
@@ -29,6 +33,7 @@ public class Monster : MonoBehaviour
     {
         hitPoints -= damage;
         hpBar.setSliderValue(hitPoints);
+        hpBarText.text = hitPoints + "/" + maxHp;
     }
 
     // Update is called once per frame

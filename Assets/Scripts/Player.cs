@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //Roll2Die player script
 public class Player : MonoBehaviour
@@ -25,6 +26,8 @@ public class Player : MonoBehaviour
 
     public HealthBar hpBar;
     public HealthBar mpBar;
+    public Text hpBarText;
+    public Text mpBarText;
 
     //tiles [1][2][3] represent  
     private int playerPosition;
@@ -65,11 +68,14 @@ public class Player : MonoBehaviour
         mpPotion = 3;
         invulnerable = false;
 
-        //setting slider's defaults
+        //setting health hud's defaults
         hpBar.setSliderMaxValue((int) maxHp);
         hpBar.setSliderValue(hitPoints);
+        hpBarText.text = hitPoints + "/" + maxHp;
+
         mpBar.setSliderMaxValue((int) maxMp);
         mpBar.setSliderValue(manaPoints);
+        mpBarText.text = manaPoints + "/" + maxMp;
 
         //setting coroutines
         hpRegenRoutine = hpRegen();
@@ -83,6 +89,7 @@ public class Player : MonoBehaviour
     {
         hitPoints -= damage;
         hpBar.setSliderValue(hitPoints);
+        hpBarText.text = hitPoints + "/" + maxHp;
     }
 
     // Update is called once per frame
@@ -118,10 +125,11 @@ public class Player : MonoBehaviour
 
         while (true)
         {
-            if (maxHp >= hitPoints)
+            if (maxHp > hitPoints)
             {
                 hitPoints++;
                 hpBar.setSliderValue(hitPoints);
+                hpBarText.text = hitPoints + "/" + maxHp;
             }
             //the yield statement must be outside the if statement to avoid an infinite loop
             seconds = ((100 - vitalityStat) / regenSpeed);
@@ -135,10 +143,11 @@ public class Player : MonoBehaviour
 
         while (true)
         {
-            if (maxMp >= manaPoints)
+            if (maxMp > manaPoints)
             {
                 manaPoints++;
                 mpBar.setSliderValue(manaPoints);
+                mpBarText.text = manaPoints + "/" + maxMp;
             }
             //the yield statement must be outside the if statement to avoid an infinite loop
             seconds = ((100 - wisdomStat) / regenSpeed);
@@ -236,6 +245,7 @@ public class Player : MonoBehaviour
         {
             manaPoints -= 25;
             mpBar.setSliderValue(manaPoints);
+            mpBarText.text = manaPoints + "/" + maxMp;
 
 
             //setting spawn distance away from player
