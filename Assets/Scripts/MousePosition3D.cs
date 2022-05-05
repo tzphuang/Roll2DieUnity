@@ -7,6 +7,7 @@ public class MousePosition3D : MonoBehaviour
     public static MousePosition3D Instance { get; private set; }
 
     [SerializeField] private Camera mainCamera;
+    [SerializeField] private LayerMask layerMask;
 
     private void Awake()
     {
@@ -28,8 +29,8 @@ public class MousePosition3D : MonoBehaviour
     {
         Ray currRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        //if (Physics.Raycast(currRay, out RaycastHit raycastHit, 999f, mouseColliderLayerMask)) //with mask
-        if (Physics.Raycast(currRay, out RaycastHit raycastHit))
+        //if (Physics.Raycast(currRay, out RaycastHit raycastHit))
+        if (Physics.Raycast(currRay, out RaycastHit raycastHit, float.MaxValue, layerMask)) //with mask
         {
             return raycastHit.point;
         }
