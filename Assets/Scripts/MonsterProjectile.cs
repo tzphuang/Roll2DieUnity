@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MonsterProjectile : MonoBehaviour
 {
-    public readonly float DEFAULTSPEED = 15f;
+    public readonly float DEFAULTSPEED = 18f;
     private float speed;
     private new Rigidbody rigidbody;
     private Vector3 velocity;

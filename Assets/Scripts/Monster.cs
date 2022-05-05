@@ -6,27 +6,29 @@ using UnityEngine.UI;
 public class Monster : MonoBehaviour
 {
     public readonly int maxHp = 400;
+    public readonly float waitTime = 1f; //time in between checks for next atk pattern
     public int hitPoints;
     public int monsterDamage;
-    public bool attacking;
+    public bool currentlyAttacking;
     public MonsterProjectile monsterProjectilePrefab;
     public HealthBar hpBar;
     public Text hpBarText;
+    private IEnumerator attackCoroutine;
+
 
     // Start is called before the first frame update
     void Start()
     {
         hitPoints = 400;
         hpBarText.text = hitPoints + "/" + maxHp;
-        attacking = false;
+        currentlyAttacking = false;
         monsterDamage = 15;
-        
 
         hpBar.setSliderMaxValue(maxHp);
         hpBar.setSliderValue(hitPoints);
 
-        IEnumerator attackPattern1 = spawnProjectileChain(1f);
-        StartCoroutine(attackPattern1);
+        attackCoroutine = continuousAtkRoutine();
+        StartCoroutine(attackCoroutine);
     }
 
     public void takeDamage(int damage)
@@ -36,15 +38,134 @@ public class Monster : MonoBehaviour
         hpBarText.text = hitPoints + "/" + maxHp;
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator continuousAtkRoutine()
     {
+        while (true)
+        {
+            if (!currentlyAttacking)
+            {
+                callRandomAtkPattern();
+            }
 
+            //this is just to check if the monster is not attacking every
+            //"waitTime" number of seconds and call a random attack
+            yield return new WaitForSeconds(waitTime); 
+        }
     }
 
-    private void FixedUpdate()
+    private void callRandomAtkPattern()
     {
-      
+        //inclusive range [1,2,3,4]
+        int randomNumber = Random.Range(1, 4);
+
+        switch (randomNumber)
+        {
+            case 1:
+                StartCoroutine("atkPattern1");
+                break;
+
+            case 2:
+                StartCoroutine("atkPattern2");
+                break;
+
+            case 3:
+                StartCoroutine("atkPattern3");
+                break;
+
+            case 4:
+                StartCoroutine("atkPattern4");
+                break;
+
+            default:
+                Debug.Log("Monster:CallRandomAtkPattern:Switch:Default_Statement_hit: This shouldnt happen");
+                break;
+        }
+    }
+
+    //forced to the right than to the middle
+    IEnumerator atkPattern1()
+    {
+        currentlyAttacking = true;
+
+        createProjectile(7, monsterDamage);
+        yield return new WaitForSeconds(1f);
+        createProjectile(8, monsterDamage);
+        yield return new WaitForSeconds(1f);
+        createProjectile(12, monsterDamage);
+        yield return new WaitForSeconds(1f);
+        createProjectile(8, monsterDamage);
+        yield return new WaitForSeconds(2f);
+        createProjectile(15, monsterDamage);
+        yield return new WaitForSeconds(1f);
+        createProjectile(16, monsterDamage);
+        yield return new WaitForSeconds(2.5f);
+
+        currentlyAttacking = false;
+    }
+
+    //forced to fireball or dodge game
+    IEnumerator atkPattern2()
+    {
+        currentlyAttacking = true;
+
+        createProjectile(7, monsterDamage);
+        createProjectile(8, monsterDamage);
+        yield return new WaitForSeconds(1.5f);
+        createProjectile(8, monsterDamage);
+        createProjectile(9, monsterDamage);
+        yield return new WaitForSeconds(1.5f);
+        createProjectile(7, monsterDamage);
+        createProjectile(8, monsterDamage);
+        yield return new WaitForSeconds(1.5f);
+        createProjectile(7, monsterDamage);
+        createProjectile(9, monsterDamage);
+        yield return new WaitForSeconds(2.5f);
+
+        currentlyAttacking = false;
+    }
+
+    //dodge middle, stay mid, right to left to right
+    IEnumerator atkPattern3()
+    {
+        currentlyAttacking = true;
+
+        createProjectile(8, monsterDamage);
+        yield return new WaitForSeconds(2f);
+        createProjectile(16, monsterDamage);
+        createProjectile(18, monsterDamage);
+        yield return new WaitForSeconds(2f);
+        createProjectile(13, monsterDamage);
+        yield return new WaitForSeconds(1f);
+        createProjectile(14, monsterDamage);
+        yield return new WaitForSeconds(1f);
+        createProjectile(15, monsterDamage);
+        yield return new WaitForSeconds(1f);
+        createProjectile(14, monsterDamage);
+        yield return new WaitForSeconds(1f);
+        createProjectile(13, monsterDamage);
+        yield return new WaitForSeconds(2.5f);
+
+        currentlyAttacking = false;
+    }
+
+    //mirror of atkpatter1
+    IEnumerator atkPattern4()
+    {
+        currentlyAttacking = true;
+
+        createProjectile(9, monsterDamage);
+        yield return new WaitForSeconds(1f);
+        createProjectile(8, monsterDamage);
+        yield return new WaitForSeconds(1f);
+        createProjectile(11, monsterDamage);
+        yield return new WaitForSeconds(1f);
+        createProjectile(8, monsterDamage);
+        yield return new WaitForSeconds(2f);
+        createProjectile(13, monsterDamage);
+        yield return new WaitForSeconds(1f);
+        createProjectile(18, monsterDamage);
+        yield return new WaitForSeconds(2.5f);
+        currentlyAttacking = false;
     }
 
     //tester coroutine to make sure spawning works
