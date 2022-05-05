@@ -28,6 +28,8 @@ public class Player : MonoBehaviour
     public HealthBar mpBar;
     public Text hpBarText;
     public Text mpBarText;
+    public Text hpPotButtonText;
+    public Text mpPotButtonText;
 
     //tiles [1][2][3] represent  
     private int playerPosition;
@@ -62,10 +64,15 @@ public class Player : MonoBehaviour
         intelligenceStat = 10; 
         dexterityStat = 10; 
         vitalityStat = 10; //this should never go over 100 or regen code breaks
-        wisdomStat = 99; //this should never go over 100 or regen code breaks
+        wisdomStat = 10; //this should never go over 100 or regen code breaks
         luckStat = 10;
+
+        //setting pots defaults
         hpPotion = 3;
+        hpPotButtonText.text = "" + hpPotion;
         mpPotion = 3;
+        mpPotButtonText.text = "" + mpPotion;
+
         invulnerable = false;
 
         //setting health hud's defaults
@@ -92,6 +99,30 @@ public class Player : MonoBehaviour
         hpBarText.text = hitPoints + "/" + maxHp;
     }
 
+    public void useHpPot()
+    {
+        if(maxHp != hitPoints && hpPotion > 0)
+        {
+            hitPoints = 100;
+            hpPotion--;
+            hpBar.setSliderValue(hitPoints);
+            hpBarText.text = hitPoints + "/" + maxHp;
+            hpPotButtonText.text = "" + hpPotion; //has to be after the decrement to update properly
+        }
+    }
+
+    public void useMpPot()
+    {
+        if(maxMp != manaPoints && mpPotion > 0)
+        {
+            manaPoints = 100;
+            mpPotion--;
+            mpBar.setSliderValue(manaPoints);
+            mpBarText.text = manaPoints + "/" + maxMp;
+            mpPotButtonText.text = "" + mpPotion; //has to be after the decrement to update properly
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -100,15 +131,28 @@ public class Player : MonoBehaviour
         {
             moveLeftOneTile();
         }
-
         if (Input.GetKeyDown(KeyCode.D))
         {
             moveRightOneTile();
         }
 
+        //check to see if player wants to spawn a projectile
         if (Input.GetKeyDown(KeyCode.Space))
         {
             spawnProjectile();
+        }
+
+
+        //check to see if player wants to use an HP potion
+        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            useHpPot();
+        }
+
+        //check to see if player wants to use an MP potion
+        if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            useMpPot();
         }
     }
 
