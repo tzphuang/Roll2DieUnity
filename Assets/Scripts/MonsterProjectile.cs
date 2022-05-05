@@ -110,6 +110,7 @@ public class MonsterProjectile : MonoBehaviour
         {
             Player currPlayer = (Player)other.GetComponent<Player>();
             currPlayer.takeDamage(projectileDamage);
+            Destroy(this.gameObject);
         }
     }
 }

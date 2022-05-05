@@ -154,6 +154,14 @@ public class Player : MonoBehaviour
         {
             useMpPot();
         }
+
+        //0 for primary button
+        //1 for secondary button
+        //2 for middle button
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log(MousePosition3D.GetMouseWorldPosition());
+        }
     }
 
     //update on every game engine tick
