@@ -6,7 +6,7 @@ public class AttackBox : MonoBehaviour
 {
     public readonly float startingZ = 42f;
     public readonly float endingZ = -2f;
-    public readonly float adjustmentZ = -2.5f;
+    public readonly float adjustmentZ = -2f;
     private float startingX;
     private float endingX;
     private float startingY;
