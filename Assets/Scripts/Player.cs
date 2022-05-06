@@ -22,8 +22,12 @@ public class Player : MonoBehaviour
     public int hpPotion;
     public int mpPotion;
     public bool invulnerable;
-    public Fireball fireballPrefab;
 
+    //prefabs player will need
+    public Fireball fireballPrefab;
+    public AttackBox atkBoxPrefab;
+
+    //UI elements and their references that need to be updated
     public HealthBar hpBar;
     public HealthBar mpBar;
     public Text hpBarText;
@@ -41,13 +45,9 @@ public class Player : MonoBehaviour
     private IEnumerator hpRegenRoutine;
     private IEnumerator mpRegenRoutine;
 
-    //array needed to dynamically store all attack boxes created by player
-    //so the attack boxes can be instantiated/referenced/destroyed 
-    private GameObject[] attackBoxes;
-
+    private AttackBox currAtkBox;
     private new Rigidbody rigidbody;
-
-
+    
     //Start is called before the first frame update
     void Start()
     {
@@ -158,9 +158,32 @@ public class Player : MonoBehaviour
         //0 for primary button
         //1 for secondary button
         //2 for middle button
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)) //checking if mouse button is held down
         {
-            Debug.Log(MousePosition3D.GetMouseWorldPosition());
+            //Debug.Log(MousePosition3D.GetMouseWorldPosition());
+
+            if(currAtkBox == null) //creates an attack box on the initial click
+            {
+                currAtkBox = Instantiate(atkBoxPrefab);
+                currAtkBox.setBoolMouseReleased(false);
+                currAtkBox.setMousePressedPoint(MousePosition3D.GetMouseWorldPosition());
+                //the reason why setMouseReleasedPoint is set here is just so things dont throw
+                //null errors when checked
+                currAtkBox.setMouseReleasedPoint(MousePosition3D.GetMouseWorldPosition());
+            }
+            else //updates the release point as the mouse is dragged around
+            {
+                currAtkBox.setMouseReleasedPoint(MousePosition3D.GetMouseWorldPosition());
+            }
+
+            
+        }
+        if ( !(Input.GetMouseButton(0)) ) //checking if mouse button not held down
+        {
+            if(currAtkBox != null)
+            {
+                currAtkBox.setBoolMouseReleased(true);
+            }
         }
     }
 

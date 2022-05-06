@@ -2109,6 +2109,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 460705019859152024, guid: fde75c47c1e4249fda3985d212dade60, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 460705019859152024, guid: fde75c47c1e4249fda3985d212dade60, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 460705019859152026, guid: fde75c47c1e4249fda3985d212dade60, type: 3}
       propertyPath: m_Name
       value: MousePad
@@ -2377,6 +2385,10 @@ PrefabInstance:
       propertyPath: mpPotButton
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7655402172411883022, guid: e69f2b3235c5842d090ddf959367b2c0, type: 3}
+      propertyPath: atkBoxPrefab
+      value: 
+      objectReference: {fileID: 8856854701724419671, guid: 9953b60324aef4068a481ef8fbb8bf6d, type: 3}
     - target: {fileID: 7655402172411883022, guid: e69f2b3235c5842d090ddf959367b2c0, type: 3}
       propertyPath: hpPotButtonText
       value: 
