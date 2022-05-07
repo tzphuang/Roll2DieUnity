@@ -97,7 +97,7 @@ public class AttackBox : MonoBehaviour
             }
 
             //no matter what i want the attack box destroyed the following frame
-            //StartCoroutine("destroySelf");
+            StartCoroutine("destroySelf");
         }
     }
 
