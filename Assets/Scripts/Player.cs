@@ -62,9 +62,9 @@ public class Player : MonoBehaviour
         manaPoints = 100;
         strengthStat = 10;
         intelligenceStat = 10; 
-        dexterityStat = 10; 
-        vitalityStat = 10; //this should never go over 100 or regen code breaks
-        wisdomStat = 10; //this should never go over 100 or regen code breaks
+        dexterityStat = 10;
+        vitalityStat = 90; //this should never go over 100 or regen code breaks
+        wisdomStat = 90; //this should never go over 100 or regen code breaks
         luckStat = 10;
 
         //setting pots defaults
