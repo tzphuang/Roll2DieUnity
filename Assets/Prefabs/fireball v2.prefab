@@ -197,6 +197,10 @@ PrefabInstance:
       propertyPath: speed
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 114459640776338082, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 135537387491394736, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
       propertyPath: m_IsTrigger
       value: 1
@@ -229,7 +233,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114459640776338082, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
+    - {fileID: 54078151922935178, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
+    - {fileID: 135537387491394736, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
 --- !u!4 &1389637034445003217 stripped
 Transform:
