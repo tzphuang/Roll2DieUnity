@@ -47,6 +47,15 @@ public class Player : MonoBehaviour
 
     private AttackBox currAtkBox;
     private new Rigidbody rigidbody;
+
+    //Audio
+    public AudioClip FireballSound;
+    public AudioClip MoveSound;
+    public AudioClip DamageSound;
+    public AudioClip PotionDrink;
+    AudioSource audioSource;
+
+
     
     //Start is called before the first frame update
     void Start()
@@ -90,6 +99,11 @@ public class Player : MonoBehaviour
 
         //starting coroutines
         startPlayerCoroutines();
+
+        //Audio
+        audioSource = GetComponent<AudioSource>();
+
+        
     }
 
     public void takeDamage(int damage)
@@ -97,6 +111,7 @@ public class Player : MonoBehaviour
         hitPoints -= damage;
         hpBar.setSliderValue(hitPoints);
         hpBarText.text = hitPoints + "/" + maxHp;
+        audioSource.PlayOneShot(DamageSound);
     }
 
     public void useHpPot()
@@ -130,16 +145,20 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             moveLeftOneTile();
+            audioSource.PlayOneShot(MoveSound);
+            
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
             moveRightOneTile();
+            audioSource.PlayOneShot(MoveSound);
         }
 
         //check to see if player wants to spawn a projectile
         if (Input.GetKeyDown(KeyCode.Space))
         {
             spawnProjectile();
+            audioSource.PlayOneShot(FireballSound);
         }
 
 
@@ -147,12 +166,14 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
         {
             useHpPot();
+            audioSource.PlayOneShot(PotionDrink);
         }
 
         //check to see if player wants to use an MP potion
         if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
         {
             useMpPot();
+            audioSource.PlayOneShot(PotionDrink);
         }
 
         //0 for primary button
