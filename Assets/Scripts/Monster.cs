@@ -15,6 +15,10 @@ public class Monster : MonoBehaviour
     public Text hpBarText;
     private IEnumerator attackCoroutine;
 
+    //Audio
+    public AudioClip EnemyDamageSound;
+    AudioSource audioSource;
+
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +33,8 @@ public class Monster : MonoBehaviour
 
         attackCoroutine = continuousAtkRoutine();
         StartCoroutine(attackCoroutine);
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void takeDamage(int damage)
@@ -36,6 +42,7 @@ public class Monster : MonoBehaviour
         hitPoints -= damage;
         hpBar.setSliderValue(hitPoints);
         hpBarText.text = hitPoints + "/" + maxHp;
+        audioSource.PlayOneShot(EnemyDamageSound);
     }
 
     IEnumerator continuousAtkRoutine()

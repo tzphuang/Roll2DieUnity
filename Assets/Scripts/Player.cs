@@ -123,6 +123,7 @@ public class Player : MonoBehaviour
             hpBar.setSliderValue(hitPoints);
             hpBarText.text = hitPoints + "/" + maxHp;
             hpPotButtonText.text = "" + hpPotion; //has to be after the decrement to update properly
+            audioSource.PlayOneShot(PotionDrink);
         }
     }
 
@@ -135,6 +136,7 @@ public class Player : MonoBehaviour
             mpBar.setSliderValue(manaPoints);
             mpBarText.text = manaPoints + "/" + maxMp;
             mpPotButtonText.text = "" + mpPotion; //has to be after the decrement to update properly
+            audioSource.PlayOneShot(PotionDrink);
         }
     }
 
@@ -166,14 +168,12 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
         {
             useHpPot();
-            audioSource.PlayOneShot(PotionDrink);
         }
 
         //check to see if player wants to use an MP potion
         if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
         {
             useMpPot();
-            audioSource.PlayOneShot(PotionDrink);
         }
 
         //0 for primary button
